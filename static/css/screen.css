@@ -1,0 +1,62 @@
+html,
+body {
+    font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+    height: 100%;
+}
+
+table .ui-sortable {
+    width: 100%;
+    min-height: 50px;
+    display: block;
+}
+
+.add-widget-button {
+    text-align: center;
+}
+
+.add-widget-button:hover {
+    background-color: rgba(0,0,255,0.4);
+}
+
+.login-notice {
+    position: absolute;
+    top: 0px;
+    right: 0px;
+    margin: 1em;
+    color: red;
+}
+
+.home-header {
+    text-align: center;
+}
+
+.copyright {
+    text-align: center;
+}
+
+.clickable {
+    border: solid 1px transparent;
+}
+
+.clickable:hover {
+    color: green;
+    border: solid 1px green;
+}
+
+.scratch {
+    display: none;
+}
+
+.top-bar {
+    text-align: center;
+}
+
+section {
+    display: inline-block;
+}
+
+.not-provided {
+    border: 1px solid;
+    background: rgba(0,0,255,0.2);
+    text-align: center;
+}

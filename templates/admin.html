@@ -1,0 +1,79 @@
+{% extends "base.html" %}
+{% block title %}Admin{% endblock %}
+{% block head %}
+    {{ super() }}
+    <style type="text/css">
+        .important { color: #336699; }
+    </style>
+{% endblock %}
+{% block content %}
+  <div style="display: none" id="edit-menu-dialog">
+    <div class="row">
+      <div class="large-12 columns">
+        <label>Title</label>
+        <input placeholder="(menu title)" data-bind="value: title"></input>
+      </div>
+    </div>
+    <br/>
+    <div class="row">
+      <div class="large-12 columns">
+        <button class="alert tiny" data-bind="click: remove, visible: editMode">
+Delete Menu</button>
+      </div>
+    </div>
+  </div>
+
+  <div style="display: none" id="edit-page-dialog">
+    <div class="row">
+      <div class="large-12 columns">
+        <label>Title</label>
+        <input placeholder="(page title)" data-bind="value: title"></input>
+      </div>
+    </div>
+    <br/>
+    <div class="row">
+      <div class="large-12 columns">
+        <button class="alert tiny" data-bind="click: remove, visible: editMode">
+Delete Page</button>
+      </div>
+    </div>
+
+  </div>
+
+    <div class="row">
+      <div id="menu-content" class="large columns-12">
+        <h5>Menu/Page Hierarchy</h5>
+        <div data-bind="foreach: menus">
+          <table style="float: left;">
+            <tr><th class="clickable" data-bind="click: $parent.editMenu"><i class="foundicon-folder" title="edit menu"></i> <span data-bind="text: 'Menu: ' + title"></span></th></tr>
+            
+            <tbody class="droppable" data-bind="sortable: { data: pages, afterMove: orderChanged }">
+              <tr><td class="clickable" data-bind="click: $parent.editPage"><i class="foundicon-page" title="edit page"></i> <span data-bind="text: $data.title"></span></td></tr>
+            </tbody>
+            
+            <tr><td><button class="tiny" data-bind="click: newPage">New Page</button></td></tr>
+          </table>
+        </div>
+        <button style="display: inline-block" data-bind="click: newMenu">New Menu</button>
+      </div>
+    </div>
+
+    <div class="row">
+      <div id="header-content" class="large columns-12">
+        <h5>Header Image</h5>
+        <div>
+          <div id="header-dropzone" class="not-provided clickable" data-bind="visible: showSelector">
+            hello
+          </div>
+          <!-- <img data-bind="attr: { src: url }"> -->
+        </div>
+      </div>
+    </div>
+
+    <form action="/header" class="dropzone"></form>
+
+    <script src="/static/js/admin.js"></script>
+    <script src="/static/libs/knockout-sortable-0.9.3/knockout-sortable.js"></script>
+    <script src="/static/libs/dropzone/dropzone.js"></script>
+
+{% endblock %}

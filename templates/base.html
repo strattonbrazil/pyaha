@@ -1,0 +1,40 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN">
+<html lang="en">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    {% block head %}
+    <link rel="stylesheet" href="/static/libs/foundation-5.5.0/css/foundation.min.css" />
+    <link rel="stylesheet" href="/static/libs/foundation_icons_general/stylesheets/general_foundicons.css" />
+    <link rel="stylesheet" href="/static/libs/jquery-contextMenu/jquery.contextMenu.css" />
+    <link rel="stylesheet" href="/static/libs/jquery-ui-1.11.2/jquery-ui.css" />
+
+    <link rel="stylesheet" href="/static/css/screen.css" />
+    <link rel="stylesheet" href="/static/libs/dropzone/dropzone.css" />
+
+    <script src="/static/libs/foundation-5.5.0/js/vendor/modernizr.js"></script>
+    <script src="/static/libs/foundation-5.5.0/js/vendor/jquery.js"></script>
+    <script src="/static/libs/foundation-5.5.0/js/vendor/fastclick.js"></script>
+    <script src="/static/libs/foundation-5.5.0/js/foundation.min.js"></script>
+    <script src="/static/libs/jquery-contextMenu/jquery.contextMenu.js"></script>
+    <script src="/static/libs/jquery-ui-1.11.2/jquery-ui.js"></script>
+    <script src="/static/libs/knockout-3.2.0/knockout-3.2.0.js"></script>
+
+    <title>{% block title %}{% endblock %} - Aha</title>
+    {% endblock %}
+</head>
+<body>
+    <div id="content">
+      {% block content %}{% endblock %}
+    </div>
+    <div class="row">
+      <div class="large columns-12">
+        {% block footer %}
+        <div class="copyright">&copy; Copyright 2014 - Aha</div>
+        {% endblock %}
+      </div>
+    </div>
+
+    <script>
+$(document).foundation();
+    </script>
+</body>
