@@ -324,9 +324,6 @@
   })();
 
   ready = function() {
-    $("#header-dropzone").dropzone({
-      url: "/header"
-    });
     ko.applyBindings(new AdminMenuViewModel(), document.getElementById('menu-content'));
     return ko.applyBindings(new AdminImageViewModel('header'), document.getElementById('header-content'));
   };

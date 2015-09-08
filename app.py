@@ -5,7 +5,8 @@ import base64
 import json
 import requests
 import hashlib
-from flask import request, Response, session, redirect
+import urlparse
+from flask import request, Response, session, redirect, send_from_directory
 from functools import wraps
 from flask import render_template
 from werkzeug import secure_filename
@@ -196,6 +197,17 @@ def page(pageId):
 
     return 'done'
 
+@app.route('/layout')
+def layout():
+
+    data = {}
+    data['widgets'] = [{
+        'name' : 'header-template',
+        'srcUrl' : _getHeaderUrl()
+    }]
+
+    return flask.jsonify(**data)
+
 @app.route('/upload', methods=['POST'])
 def upload():
     """Upload a new file."""
@@ -211,15 +223,22 @@ def upload():
     #    return redirect(url_for('index'))
     #return render_template('upload.html')
 
+def _getHeaderUrl():
+    imageTag = dbSession.query(ImageTag).filter(ImageTag.tag == "header").first()
+    return '/uploads/' + imageTag.path
+
 @app.route('/header', methods=['GET', 'POST'])
 @requires_auth
 def header(forcedName=None):
     if request.method == 'POST':
-        file = request.files['file']
-        if file and allowed_file(file.filename):            
-            fileName = secure_filename(file.filename)
+        fileName = secure_filename(urlparse.unquote(request.headers['X-File-Name']))
+        if allowed_file(fileName):
             filePath = os.path.join(app.config['UPLOAD_FOLDER'], fileName)
-            file.save(filePath)
+            with open(filePath, 'w') as fd:
+                fd.write(request.data)
+
+            # delete existing header
+            dbSession.query(ImageTag).filter(ImageTag.tag == "header").delete()
 
             tag = ImageTag(hash=md5(filePath), tag='header', path=fileName)
             dbSession.add(tag)
@@ -227,11 +246,17 @@ def header(forcedName=None):
 
         return 'done'
     else:
-        data = { 'url' : None }
+        imageTag = dbSession.query(ImageTag).filter(ImageTag.tag == "header").first()
+        data = { 'url' : _getHeaderUrl() }
 
         return flask.jsonify(**data)
 
+# Custom static data
+@app.route('/uploads/<path:filename>')
+def custom_static(filename):
+    return send_from_directory(app.config['UPLOAD_FOLDER'], filename)
+
 if __name__ == '__main__':
     initModels()
-    app.run()
+    app.run(host='0.0.0.0')
 

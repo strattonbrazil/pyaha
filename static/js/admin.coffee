@@ -229,7 +229,7 @@ class AdminImageViewModel
 ready = ->
     #Dropzone.autoDiscover = false;
     #new Dropzone($("#header-dropzone").get(0));
-    $("#header-dropzone").dropzone({ url: "/header" });
+    #$("#header-dropzone").dropzone({ url: "/header" });
     ko.applyBindings(new AdminMenuViewModel(), document.getElementById('menu-content'))
 
     ko.applyBindings(new AdminImageViewModel('header'), document.getElementById('header-content'))

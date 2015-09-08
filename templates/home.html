@@ -7,10 +7,17 @@
 
 {% include '_menu.html' %}
 
-    <div class="row">
-      <div class="large columns-12">
-        Home Page!
+<script type="text/html" id="header-template">
+  <img data-bind="attr: { src: $data.srcUrl }">
+</script>
+
+    <div data-bind="foreach: layoutItems">
+      <div class="row">
+        <div class="large columns-12">
+          <div data-bind="template: $data"></div>
+        </div>
       </div>
     </div>
 
+    <script src="/static/js/main.js"></script>
 {% endblock %}

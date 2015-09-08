@@ -3,35 +3,11 @@
   var LayoutViewModel, ready,
     __bind = function(fn, me){ return function(){ return fn.apply(me, arguments); }; };
 
-  $.contextMenu({
-    selector: '.right-click-edit',
-    build: function($trigger, e) {
-      console.log($trigger[0]);
-      console.log($trigger);
-      console.log(e);
-      return {
-        callback: function(key, options) {
-          var m;
-          m = "clicked: " + key;
-          return window.console && console.log(m) || alert(m);
-        },
-        items: {
-          "edit": {
-            name: "Change Image",
-            icon: "edit"
-          }
-        }
-      };
-    }
-  });
-
   LayoutViewModel = (function() {
 
     function LayoutViewModel() {
       this._requestLayout = __bind(this._requestLayout, this);
-      this.header = ko.observable({
-        text: 'ack'
-      });
+      this.header = ko.observable({});
       this.layoutItems = ko.observableArray();
       this._requestLayout();
     }
@@ -54,11 +30,17 @@
       var callback,
         _this = this;
       callback = function(data) {
+        var widget, _i, _len, _ref;
         console.log(data);
         _this.header({
           text: data.header
         });
-        return _this.layoutItems(data.widgets);
+        _ref = data.widgets;
+        for (_i = 0, _len = _ref.length; _i < _len; _i++) {
+          widget = _ref[_i];
+          _this.layoutItems.push(widget);
+        }
+        return console.log(_this.layoutItems());
       };
       return $.getJSON("/layout", callback);
     };

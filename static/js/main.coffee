@@ -1,28 +1,6 @@
-$.contextMenu({
-    selector: '.right-click-edit', 
-    build: ($trigger, e) ->
-        console.log($trigger[0])
-        console.log($trigger)
-        console.log(e)
-        # this callback is executed every time the menu is to be shown
-        # its results are destroyed every time the menu is hidden
-        # e is the original contextmenu event, containing e.pageX and e.pageY (amongst other data)
-        return {
-            callback: (key, options) ->
-                m = "clicked: " + key
-                window.console && console.log(m) || alert(m)
-            items: {
-                "edit": {name: "Change Image", icon: "edit"}
-            }
-        }
-
-})
-
 class LayoutViewModel
     constructor: ->
-        @header = ko.observable({
-            text: 'ack'
-        })
+        @header = ko.observable({})
         @layoutItems = ko.observableArray()
 
         @_requestLayout()
@@ -45,7 +23,10 @@ class LayoutViewModel
         callback = (data) =>
             console.log(data)
             @header({ text: data.header })
-            @layoutItems(data.widgets)
+
+            for widget in data.widgets            
+                @layoutItems.push(widget)
+            console.log(@layoutItems())
         $.getJSON("/layout", callback)
 
 
